@@ -62,4 +62,4 @@ else
 fi
 unset FFREPORT
 
-szcomp "$in" "$out"
+szcomp "$out" "$in"
