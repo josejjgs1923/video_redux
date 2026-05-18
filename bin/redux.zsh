@@ -3,13 +3,7 @@
 DIR_SCRIPT="${0:A:h}"
 LIB="$DIR_SCRIPT/../lib"
 . $LIB/calc.zsh
-
-ayuda() {
-  less -FEXR <<- HELP
-  uso: ${ZSH_ARGZERO:t} [--crf compresion] [--simple] [--log] [--preset PRESET] in_file out_file
-HELP
-	exit "$1"
-}
+. $LIB/util.sh
 
 zparseopts -F -E -D  h=_ayuda -help=_ayuda -simple=simple -log=log -crf:=crf c:=carpeta -carpeta:=carpeta -preset:=preset || ayuda 1
 
