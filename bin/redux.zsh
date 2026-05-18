@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
 DIR_SCRIPT="${0:A:h}"
-MODULOS="$DIR_SCRIPT/modulos"
-. $MODULOS/funciones_error.sh
+LIB="$DIR_SCRIPT/../lib"
+. $LIB/calc.zsh
 
 ayuda() {
   less -FEXR <<- HELP
@@ -14,17 +14,6 @@ HELP
 zparseopts -F -E -D  h=_ayuda -help=_ayuda -simple=simple -log=log -crf:=crf c:=carpeta -carpeta:=carpeta -preset:=preset || ayuda 1
 
 [[ -n "${_ayuda:+1}" ]] && ayuda 0
-
-
-szcomp(){
-  stat --format "%s %n" "$1" "$2" | numfmt -d " " --to si --suffix B
-
-  printf "compresion "
-
-  printf "redux (%s; %s) to %%" $( stat --format "%s" "$1" "$2" ) | qalc --terse --set "maxdeci 2" --color
-}
-
-
 
 #Comprimir Video
 local CARPETA_DEFAULT=.
