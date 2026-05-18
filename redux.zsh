@@ -11,26 +11,30 @@ HELP
 	exit "$1"
 }
 
-zparseopts -F -E -D  h=_ayuda -help=_ayuda -simple=simple -log=log -crf:=crf -preset:=preset || ayuda 1
+zparseopts -F -E -D  h=_ayuda -help=_ayuda -simple=simple -log=log -crf:=crf c:=carpeta -carpeta:=carpeta -preset:=preset || ayuda 1
 
 [[ -n "${_ayuda:+1}" ]] && ayuda 0
 
 
 szcomp(){
-  stat --format "%s %n" "$1" "$2" | numfmt -d " " --to si
+  stat --format "%s %n" "$1" "$2" | numfmt -d " " --to si --suffix B
 
-  printf "redux (%s; %s) to %%" $( stat --format "%s" "$1" "$2" ) | qalc --color
+  printf "compresion "
+
+  printf "redux (%s; %s) to %%" $( stat --format "%s" "$1" "$2" ) | qalc --terse --set "maxdeci 2" --color
 }
 
 
 
 #Comprimir Video
+local CARPETA_DEFAULT=.
 local CRF_DEFAULT=28
 local PRESET_DEFAULT=fast
 
 [[ -z "$1" ]] && error "Debe pasarse al menos un argumento."
 
 local in="$1"
+local CARPETA="${carpeta[2]:-$CARPETA_DEFAULT}"
 local CRF="${crf[2]:-$CRF_DEFAULT}"
 local PRESET="${preset[2]:-$PRESET_DEFAULT}"
 
@@ -46,6 +50,8 @@ then
   fi
 fi
 
+out="$CARPETA/$out"
+
 local REPORT=
 
 if [[ -n $log ]]
@@ -56,9 +62,9 @@ fi
 
 if [[ -n $simple ]]
 then
-  time ffmpeg -hide_banner $REPORT -i "$in" "$out"
+  time ffmpeg -hide_banner $REPORT -y -i "$in" "$out"
 else
-  time ffmpeg -hide_banner $REPORT -i "$in" -c:v libx265 -preset "$PRESET" -crf "$CRF" -c:a aac "$out"
+  time ffmpeg -hide_banner $REPORT -y -i "$in" -c:v libx265 -preset "$PRESET" -crf "$CRF" -c:a aac "$out"
 fi
 unset FFREPORT
 
