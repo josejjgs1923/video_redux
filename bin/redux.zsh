@@ -5,7 +5,7 @@ LIB="$DIR_SCRIPT/../lib"
 . $LIB/calc.zsh
 . $LIB/util.sh
 
-zparseopts -F -E -D  h=_ayuda -help=_ayuda -simple=simple -log=log -crf:=crf c:=carpeta -carpeta:=carpeta -preset:=preset || ayuda 1
+zparseopts -F -E -D  h=_ayuda -help=_ayuda -simple=simple -log=log -crf:=crf c:=carpeta -carpeta:=carpeta -preset:=preset e:=extension -extension:=extension || ayuda 1
 
 [[ -n "${_ayuda:+1}" ]] && ayuda 0
 
@@ -21,16 +21,20 @@ local CARPETA="${carpeta[2]:-$CARPETA_DEFAULT}"
 local CRF="${crf[2]:-$CRF_DEFAULT}"
 local PRESET="${preset[2]:-$PRESET_DEFAULT}"
 
+local EXTENSION_IN="${in:e}"
+local EXTENSION="${extension[2]:-$EXTENSION_IN}"
 local out="$2"
 
 if [[ -z "$out" ]]
 then
   if [[ -n $simple ]]
   then
-    out="${in:r}_SIMPLE.${in:e}"
+    out="${in:r}_SIMPLE"
   else
-    out="${in:r}_CRF${CRF}_PRESET_${PRESET}.${in:e}"
+    out="${in:r}_CRF${CRF}_PRESET_${PRESET}"
   fi
+
+  out="$out.${EXTENSION}"
 fi
 
 out="$CARPETA/$out"
