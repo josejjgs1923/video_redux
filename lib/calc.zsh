@@ -3,8 +3,9 @@
 szcomp(){
   stat --format "%s %n" "$1" "$2" | numfmt -d " " --to si --suffix B
 
-  printf "compresion "
+  compresion="$( printf "redux (%s; %s) to %%" $( stat --format "%s" "$1" "$2" ) )"
 
-  printf "redux (%s; %s) to %%" $( stat --format "%s" "$1" "$2" ) | qalc --terse --set "maxdeci 2" --color
+  printf "compresion "
+  qalc --terse --set "maxdeci 2" --color "$compresion"
 }
 
