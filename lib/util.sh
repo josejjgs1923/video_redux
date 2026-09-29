@@ -7,14 +7,16 @@ ayuda() {
   Script Wrapper para ffmpeg, utilizado para comprimir videos
 
   opciones:
-     -c/--carpeta ruta   carpeta objetivo para los videos comprimidos
-     -e/--extension str  extension de salida, usando por defecto la del archivo
-                         de entrada
-     --crf               factor de compresion, defecto 28
-     --preset PRESET     valor de preset para comando ffmepg, por defecto es 'fast'
-     --simple            No usar factor se compresion, usar los valores
-                         por defecto de ffmpeg
-     --log               crear archivo log para el comando
+     -c/--carpeta ruta            carpeta objetivo para los videos comprimidos
+     -e/--extension st            r  extension de salida, usando por defecto la del archivo
+                                  de entrada
+     --crf                        factor de compresion, defecto 28
+     --preset PRESET              valor de preset para comando ffmepg, por defecto es 'fast'
+     -r/--resolucion alto:ancho   Nueva resolucion del video. por defecto no cambiaa.
+     --1080                       Nueva resolucion 1080p (1920:1p80)
+     --simple                     No usar factor se compresion, usar los valores
+                                  por defecto de ffmpeg
+     --log                        crear archivo log para el comando
 HELP
 	exit "$1"
 }
